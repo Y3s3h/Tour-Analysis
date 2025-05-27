@@ -1,16 +1,3 @@
-// import express from "express";
-// import { uploadTour, getUserTours } from "../controllers/tourController.js";
-// import { protect } from "../middleware/authMiddleware.js";
-// import multer from "multer";
-
-// const upload = multer({ dest: "uploads/" });
-
-// const router = express.Router();
-
-// router.post("/", protect, upload.single("image"), uploadTour);
-// router.get("/", protect, getUserTours);
-
-// export default router;
 import express from "express";
 import multer from "multer";
 import { protect } from "../middleware/authMiddleware.js";
