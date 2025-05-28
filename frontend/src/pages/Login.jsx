@@ -15,13 +15,10 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(
-        "https://tour-analysis.onrender.com/api/auth/login",
-        {
-          username: formData.username,
-          password: formData.password,
-        }
-      );
+      const res = await axios.post("http://localhost:8080/api/auth/login", {
+        username: formData.username,
+        password: formData.password,
+      });
 
       const { token, role } = res.data;
       localStorage.setItem("token", token);

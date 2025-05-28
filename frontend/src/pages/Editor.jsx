@@ -50,7 +50,7 @@ export default function Editor() {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.post(
-        "https://tour-analysis.onrender.com/api/tours",
+        "http://localhost:8080/api/tours",
         formData,
         {
           headers: {

@@ -14,7 +14,7 @@ export default function TourView() {
       try {
         const token = localStorage.getItem("token");
         const response = await axios.get(
-          `https://tour-analysis.onrender.com/api/tours/${id}`,
+          `http://localhost:8080/api/tours/${id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

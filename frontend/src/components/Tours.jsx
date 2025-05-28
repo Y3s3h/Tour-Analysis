@@ -12,14 +12,11 @@ export default function Tours() {
     const fetchTours = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get(
-          "https://tour-analysis.onrender.com/api/tours",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await axios.get("http://localhost:8080/api/tours", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         // Check if response.data.tours exists, otherwise use response.data
         setTours(response.data.tours || response.data || []);
         setError(null);

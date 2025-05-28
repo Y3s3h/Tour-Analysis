@@ -53,7 +53,7 @@ export default function ScreenRecorder() {
     try {
       const token = localStorage.getItem("token");
       await axios.post(
-        "https://tour-analysis.onrender.com/api/recordings/upload",
+        "http://localhost:8080/api/recordings/upload",
         formData,
         {
           headers: {

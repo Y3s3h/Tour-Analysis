@@ -21,10 +21,10 @@ export default function Dashboard() {
 
       try {
         const [userRes, recordingsRes] = await Promise.all([
-          axios.get("https://tour-analysis.onrender.com/api/auth/me", {
+          axios.get("http://localhost:8080/api/auth/me", {
             headers: { Authorization: `Bearer ${token}` },
           }),
-          axios.get("https://tour-analysis.onrender.com/api/recordings", {
+          axios.get("http://localhost:8080/api/recordings", {
             headers: { Authorization: `Bearer ${token}` },
           }),
         ]);
