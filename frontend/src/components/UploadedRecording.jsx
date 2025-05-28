@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { toast } from "sonner";
 
 export default function UploadedRecordings() {
   const [recordings, setRecordings] = useState([]);
@@ -16,7 +17,7 @@ export default function UploadedRecordings() {
       setLoading(false);
     } catch (err) {
       console.error("Failed to fetch recordings:", err);
-      alert("Error fetching recordings");
+      toast.error("Error fetching recordings");
       setLoading(false);
     }
   };
@@ -30,7 +31,7 @@ export default function UploadedRecordings() {
       setRecordings((prev) => prev.filter((rec) => rec._id !== id));
     } catch (err) {
       console.error("Failed to delete recording:", err);
-      alert("Error deleting recording");
+      toast.error("Error deleting recording");
     }
   };
 

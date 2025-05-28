@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import axios from "axios";
+import { toast } from "sonner";
 
 export default function ScreenRecorder() {
   const [isRecording, setIsRecording] = useState(false);
@@ -34,7 +35,7 @@ export default function ScreenRecorder() {
       setIsRecording(true);
     } catch (err) {
       console.error("Error starting recording:", err);
-      alert("Failed to start recording: " + err.message);
+      toast.error("Failed to start recording: " + err.message);
     }
   };
 
@@ -61,11 +62,11 @@ export default function ScreenRecorder() {
           },
         }
       );
-      alert("Recording uploaded successfully!");
+      toast.success("Recording uploaded successfully!");
       setRecordedBlob(null);
     } catch (err) {
       console.error("Upload failed:", err);
-      alert("Failed to upload recording: " + err.message);
+      toast.error("Failed to upload recording: " + err.message);
     }
   };
 

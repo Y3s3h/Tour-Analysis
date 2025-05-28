@@ -1,72 +1,10 @@
-// import { useEffect, useState } from "react";
-// import axios from "axios";
-// import { useNavigate, Link } from "react-router-dom";
-
-// export default function Dashboard() {
-//   const [user, setUser] = useState(null);
-//   const navigate = useNavigate();
-
-//   useEffect(() => {
-//     const token = localStorage.getItem("token");
-
-//     if (!token) {
-//       navigate("/login");
-//       return;
-//     }
-
-//     axios
-//       .get("http://localhost:8080/api/auth/me", {
-//         headers: {
-//           Authorization: `Bearer ${token}`,
-//         },
-//       })
-//       .then((res) => setUser(res.data))
-//       .catch((err) => {
-//         localStorage.removeItem("token");
-//         navigate("/login");
-//       });
-//   }, []);
-
-//   const handleLogout = () => {
-//     localStorage.removeItem("token");
-//     navigate("/login");
-//   };
-
-//   return (
-//     <div className="p-6">
-//       {user ? (
-//         <>
-//           <h1 className="text-2xl font-bold mb-4">Welcome, {user.username}</h1>
-//           <p className="text-gray-700 mb-6">
-//             You can now create interactive tours for your product.
-//           </p>
-
-//           <div className="space-x-4">
-//             <Link to="/editor">
-//               <button className="bg-blue-600 text-white px-4 py-2 rounded">
-//                 Create New Tour
-//               </button>
-//             </Link>
-
-//             <Link to="/tours">
-//               <button className="bg-green-600 text-white px-4 py-2 rounded">
-//                 View My Tours
-//               </button>
-//             </Link>
-//           </div>
-//         </>
-//       ) : (
-//         <p>Loading user info...</p>
-//       )}
-//     </div>
-//   );
-// }
-
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import ScreenRecorder from "../components/ScreenRecorder";
 import UploadedRecordings from "../components/UploadedRecording";
+import { toast } from "sonner";
 
 export default function Dashboard() {
   const [user, setUser] = useState(null);
@@ -95,6 +33,7 @@ export default function Dashboard() {
         setRecordings(recordingsRes.data);
       } catch (err) {
         localStorage.removeItem("token");
+        toast.error("Session expired. Please login again.");
         navigate("/login");
       }
     };
@@ -102,73 +41,111 @@ export default function Dashboard() {
     fetchData();
   }, [navigate]);
 
+  const fadeIn = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0 },
+  };
+
   return (
-    <div className="p-6">
+    <div className="p-6 min-h-screen bg-gradient-to-r from-slate-100 via-white to-slate-100">
       {user ? (
         <>
-          <div className="flex justify-between items-center mb-6">
-            <h1 className="text-2xl font-bold">Welcome, {user.username}</h1>
+          <motion.div
+            className="flex justify-between items-center mb-8"
+            initial="hidden"
+            animate="show"
+            variants={fadeIn}
+            transition={{ duration: 0.5 }}
+          >
+            <h1 className="text-3xl font-extrabold text-slate-800">
+              Welcome, <span className="text-blue-600">{user.username}</span>
+            </h1>
             <button
               onClick={() => {
                 localStorage.removeItem("token");
+                toast.success("Logged out successfully.");
                 navigate("/login");
               }}
-              className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+              className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded shadow"
             >
               Logout
             </button>
-          </div>
+          </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <h2 className="text-xl font-bold mb-4">Product Tours</h2>
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 gap-6"
+            initial="hidden"
+            animate="show"
+            variants={fadeIn}
+            transition={{ delay: 0.2, duration: 0.6 }}
+          >
+            <div className="bg-white p-6 rounded-2xl shadow-lg">
+              <h2 className="text-xl font-semibold mb-4 text-slate-700">
+                Product Tours
+              </h2>
               <div className="space-y-4">
                 <Link to="/editor">
-                  <button className="w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-                    Create New Tour
+                  <button className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-all duration-300 shadow">
+                    🎬 Create New Tour
                   </button>
                 </Link>
+                <br />
                 <Link to="/tours">
-                  <button className="w-full bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
-                    View My Tours
+                  <button className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition-all duration-300 shadow">
+                    📂 View My Tours
                   </button>
                 </Link>
               </div>
             </div>
 
-            <div>
+            <motion.div
+              className="bg-white p-6 rounded-2xl shadow-lg"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.3 }}
+            >
               <ScreenRecorder />
-              <UploadedRecordings />
-            </div>
-          </div>
+              <div className="mt-4">
+                <UploadedRecordings />
+              </div>
+            </motion.div>
+          </motion.div>
 
           {recordings.length > 0 && (
-            <div className="mt-8">
-              <h2 className="text-xl font-bold mb-4">My Recordings</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <motion.div
+              className="mt-12"
+              initial="hidden"
+              animate="show"
+              variants={fadeIn}
+              transition={{ delay: 0.4, duration: 0.5 }}
+            >
+              <h2 className="text-2xl font-bold text-slate-700 mb-6">
+                My Recordings
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {recordings.map((recording) => (
-                  <div
+                  <motion.div
                     key={recording._id}
-                    className="border rounded-lg p-4 shadow"
+                    className="bg-white rounded-xl shadow-md p-4 hover:shadow-lg transition-shadow"
+                    whileHover={{ scale: 1.02 }}
                   >
                     <video
                       src={recording.url}
                       controls
-                      className="w-full mb-2"
+                      className="w-full rounded-md mb-3"
                     />
-                    <p className="text-sm text-gray-600">
-                      Recorded:{" "}
-                      {new Date(recording.createdAt).toLocaleDateString()}
+                    <p className="text-sm text-gray-500 text-right">
+                      📅 {new Date(recording.createdAt).toLocaleDateString()}
                     </p>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
-            </div>
+            </motion.div>
           )}
         </>
       ) : (
         <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-600"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-blue-600"></div>
         </div>
       )}
     </div>

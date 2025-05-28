@@ -8,12 +8,15 @@ import Navbar from "./components/Navbar";
 
 import Tours from "./components/Tours";
 import TourView from "./components/TourView";
+import { Toaster } from "sonner";
 
 function App() {
   return (
     <Router>
+      <Toaster position="top-right" richColors />
       <Navbar />
       <Routes>
+        <Route path="/home" element={<Home />} />
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/editor" element={<Editor />} />

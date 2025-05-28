@@ -1,57 +1,74 @@
 import Tour from "../models/Tour.js";
-// import { uploadToCloudinary } from "../utils/cloudinary.js";
-
-// export const uploadTour = async (req, res) => {
-//   try {
-//     const { steps } = req.body;
-//     const file = req.file;
-
-//     if (!file) return res.status(400).json({ msg: "Image is required" });
-
-//     const result = await uploadToCloudinary(file.path);
-//     const newTour = await Tour.create({
-//       userId: req.user.id,
-//       imageUrl: result.secure_url,
-//       steps: JSON.parse(steps),
-//     });
-
-//     res.status(201).json(newTour);
-//   } catch (err) {
-//     res.status(500).json({ msg: "Tour upload failed", error: err.message });
-//   }
-// };
 
 export const uploadTour = async (req, res) => {
   try {
-    const { steps } = req.body;
-    const image = req.file;
-
-    if (!image) {
-      return res.status(400).json({ msg: "Image is required" });
+    // Validate request
+    if (!req.file) {
+      return res.status(400).json({ msg: "Please upload an image" });
     }
 
-    const imageUrl = image.path; // Cloudinary returns this
+    if (!req.body.steps) {
+      return res.status(400).json({ msg: "Please add tour steps" });
+    }
 
-    const parsedSteps = JSON.parse(steps);
-
-    const newTour = new Tour({
+    // Create tour with validated data
+    const tour = await Tour.create({
       userId: req.user.id,
-      imageUrl,
-      steps: parsedSteps,
+      imageUrl: req.file.path,
+      steps: JSON.parse(req.body.steps),
     });
 
-    await newTour.save();
-    res.status(201).json({ msg: "Tour uploaded successfully", tour: newTour });
+    res.status(201).json({
+      success: true,
+      tour,
+    });
   } catch (err) {
-    res.status(500).json({ msg: "Tour upload failed", error: err.message });
+    console.error("Tour upload error:", err);
+    res.status(500).json({
+      msg: "Failed to create tour",
+      error: err.message,
+    });
   }
 };
 
 export const getUserTours = async (req, res) => {
   try {
-    const tours = await Tour.find({ userId: req.user.id });
-    res.json(tours);
+    const tours = await Tour.find({ userId: req.user.id }).sort({ createdAt: -1 });
+
+    res.json({
+      success: true,
+      count: tours.length,
+      tours,
+    });
   } catch (err) {
-    res.status(500).json({ msg: "Fetch failed", error: err.message });
+    console.error("Get tours error:", err);
+    res.status(500).json({
+      msg: "Failed to fetch tours",
+      error: err.message,
+    });
+  }
+};
+
+export const getTourById = async (req, res) => {
+  try {
+    const tour = await Tour.findOne({
+      _id: req.params.id,
+      userId: req.user.id,
+    });
+
+    if (!tour) {
+      return res.status(404).json({ msg: "Tour not found" });
+    }
+
+    res.json({
+      success: true,
+      tour,
+    });
+  } catch (err) {
+    console.error("Get tour error:", err);
+    res.status(500).json({
+      msg: "Failed to fetch tour",
+      error: err.message,
+    });
   }
 };
