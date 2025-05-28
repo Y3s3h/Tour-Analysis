@@ -20,7 +20,7 @@ app.use("/api/recordings", recordingRoutes);
 
 mongoose
   .connect(config.mongoURI)
-  .then(() => {
+  .then(() => {   
     console.log("✅ MongoDB connected");
     app.listen(config.port, () =>
       console.log(`🚀 Server running on port ${config.port}`)
