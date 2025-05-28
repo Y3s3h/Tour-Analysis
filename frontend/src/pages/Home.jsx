@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const features = [
   {
@@ -20,6 +20,16 @@ const features = [
 ];
 
 export default function Home() {
+  const navigate = useNavigate();
+  const isLoggedIn = !!localStorage.getItem("token");
+
+  const handleGetStarted = () => {
+    if (isLoggedIn) {
+      navigate("/dashboard");
+    } else {
+      navigate("/register");
+    }
+  };
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-[#0f2027] via-[#203a43] to-[#2c5364] overflow-hidden flex flex-col items-center px-4">
       {/* Floating animated blobs */}
@@ -44,12 +54,18 @@ export default function Home() {
           a few clicks.
         </p>
         <div className="flex justify-center gap-4 flex-wrap">
-          <Link
-            to="/register"
+          {/* <Link
+            onClick={handleGetStarted}
             className="px-6 py-2 rounded-lg bg-gradient-to-r from-purple-500 to-indigo-500 hover:opacity-90 transition text-white font-semibold shadow-md"
           >
             Get Started
-          </Link>
+          </Link> */}
+          <button
+            onClick={handleGetStarted}
+            className="px-6 py-2 rounded-lg bg-gradient-to-r from-purple-500 to-indigo-500 hover:opacity-90 transition text-white font-semibold shadow-md"
+          >
+            Get Started
+          </button>
           <Link
             to="/dashboard"
             className="px-6 py-2 rounded-lg border border-white/30 hover:bg-white/10 transition text-white font-semibold"
