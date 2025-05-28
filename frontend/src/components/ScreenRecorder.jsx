@@ -53,7 +53,7 @@ export default function ScreenRecorder() {
     try {
       const token = localStorage.getItem("token");
       await axios.post(
-        "http://localhost:8080/api/recordings/upload",
+        "tour-analysis.vercel.app/api/recordings/upload",
         formData,
         {
           headers: {

@@ -12,7 +12,7 @@ export default function Tours() {
     const fetchTours = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get("http://localhost:8080/api/tours", {
+        const response = await axios.get("tour-analysis.vercel.app/api/tours", {
           headers: {
             Authorization: `Bearer ${token}`,
           },

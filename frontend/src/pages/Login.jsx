@@ -15,7 +15,7 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:8080/api/auth/login", {
+      const res = await axios.post("tour-analysis.vercel.app/api/auth/login", {
         username: formData.username,
         password: formData.password,
       });

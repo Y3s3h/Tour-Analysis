@@ -20,7 +20,7 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:8080/api/auth/register", formData);
+      await axios.post("tour-analysis.vercel.app/api/auth/register", formData);
       toast.success("Registration successful!");
       navigate("/login");
     } catch (err) {

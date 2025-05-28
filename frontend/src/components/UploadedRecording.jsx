@@ -9,7 +9,7 @@ export default function UploadedRecordings() {
   const fetchRecordings = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:8080/api/recordings", {
+      const res = await axios.get("tour-analysis.vercel.app/api/recordings", {
         headers: { Authorization: `Bearer ${token}` },
       });
       // The url from backend should be the complete URL
@@ -25,7 +25,7 @@ export default function UploadedRecordings() {
   const deleteRecording = async (id) => {
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`http://localhost:8080/api/recordings/${id}`, {
+      await axios.delete(`tour-analysis.vercel.app/api/recordings/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setRecordings((prev) => prev.filter((rec) => rec._id !== id));

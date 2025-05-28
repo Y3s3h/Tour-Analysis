@@ -21,10 +21,10 @@ export default function Dashboard() {
 
       try {
         const [userRes, recordingsRes] = await Promise.all([
-          axios.get("http://localhost:8080/api/auth/me", {
+          axios.get("tour-analysis.vercel.app/api/auth/me", {
             headers: { Authorization: `Bearer ${token}` },
           }),
-          axios.get("http://localhost:8080/api/recordings", {
+          axios.get("tour-analysis.vercel.app/api/recordings", {
             headers: { Authorization: `Bearer ${token}` },
           }),
         ]);
