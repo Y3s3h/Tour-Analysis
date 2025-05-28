@@ -9,9 +9,12 @@ export default function UploadedRecordings() {
   const fetchRecordings = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:8080/api/recordings", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await axios.get(
+        "https://tour-analysis.onrender.com/api/recordings",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       // The url from backend should be the complete URL
       setRecordings(res.data.recordings);
       setLoading(false);
@@ -25,9 +28,12 @@ export default function UploadedRecordings() {
   const deleteRecording = async (id) => {
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`http://localhost:8080/api/recordings/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await axios.delete(
+        `https://tour-analysis.onrender.com/api/recordings/${id}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       setRecordings((prev) => prev.filter((rec) => rec._id !== id));
     } catch (err) {
       console.error("Failed to delete recording:", err);
