@@ -8,12 +8,7 @@ import tourRoutes from "./routes/tourRoutes.js";
 import recordingRoutes from "./routes/recordingRoutes.js";
 
 const app = express();
-app.use(
-  cors({
-    origin: ["http://localhost:5173", "https://tour-analysis.onrender.com"],
-    credentials: true,
-  })
-);
+app.use(cors());
 app.use(express.json());
 
 // 👇 Serve static files from public/uploads
