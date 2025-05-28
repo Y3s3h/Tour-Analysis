@@ -50,7 +50,7 @@ export default function Editor() {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.post(
-        "tour-analysis.vercel.app/api/tours",
+        "https://tour-analysis.onrender.com/api/tours",
         formData,
         {
           headers: {
