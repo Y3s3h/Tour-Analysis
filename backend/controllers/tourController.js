@@ -33,7 +33,9 @@ export const uploadTour = async (req, res) => {
 
 export const getUserTours = async (req, res) => {
   try {
-    const tours = await Tour.find({ userId: req.user.id }).sort({ createdAt: -1 });
+    const tours = await Tour.find({ userId: req.user.id }).sort({
+      createdAt: -1,
+    });
 
     res.json({
       success: true,

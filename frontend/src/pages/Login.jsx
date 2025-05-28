@@ -1,32 +1,3 @@
-// import { useState } from "react";
-// import axios from "axios";
-// import { useNavigate } from "react-router-dom";
-// import { motion } from "framer-motion";
-// import { toast } from "sonner";
-
-// export default function Login() {
-//   const [formData, setFormData] = useState({ username: "", password: "" });
-//   const navigate = useNavigate();
-
-//   const handleChange = (e) => {
-//     setFormData({ ...formData, [e.target.name]: e.target.value });
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     try {
-//       const res = await axios.post("http://localhost:8080/api/auth/login", {
-//         username: formData.username,
-//         password: formData.password,
-//       });
-//       localStorage.setItem("token", res.data.token);
-//       toast.success("Login successful!");
-//       navigate("/home");
-//     } catch (err) {
-//       toast.error("Login failed: " + (err.response?.data?.msg || err.message));
-//     }
-//   };
-
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
