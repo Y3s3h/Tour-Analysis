@@ -99,11 +99,12 @@ export default function Editor() {
           placeholder="Describe this step..."
           value={stepText}
           onChange={(e) => setStepText(e.target.value)}
-          className="input input-bordered border-gray-100 flex-1"
+          // className="input input-bordered border-gray-300 flex-1"
+          className="input w-full px-2 py-2 border-2 border-gray-400 rounded-md focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200 outline-none"
         />
         <button
           onClick={handleAddStep}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow"
+          className=" bg-gradient-to-r gap-3 from-yellow-400 to-red-400 hover:from-yellow-500 hover:to-red-50 hover:bg-blue-700 text-white px-4 py-2 rounded shadow"
         >
           ➕ Add Step
         </button>
